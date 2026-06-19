@@ -1,5 +1,5 @@
 # Coral Book
-## tema
+## Tema
 Livros
 ## Proposta
 Um site para donos de livrarias e bibliotecas onde eles cadastram seu estabelecimento e seus livros onde eles colocam as informações de cada livro, tambem colocam se o livro está a venda ainda e a quantidade em estoque e seu diferencial seria que eles colocariam aonde o livro se encontraria no estabelicemento, tambem cadastrariam seu estabelicemento como fosse um perfil de rede social. Tambem teria a opção para os leitores entrarem no site e verem se o livro que eles procurem esta a venda, e achar seu livro com uma maior facilidade.
@@ -68,5 +68,14 @@ O menu fica fixo no topo da página para ser acessado a qualquer momento. Ele mu
 - Cadastrar Livro
 - Editar
 - Sair
-## Mobile
-No celular, o menu se transforma em um ícone de hambúrguer que abre uma lista vertical com os mesmos links.
+## Mobile First
+
+### Conceitos Abordados:
+- Layout responsivo: adapta automaticamente o conteúdo para diferentes tamanhos de tela
+- Menus compactos:o menu será no estilo "hambúrguer" (☰) para economizar espaço
+- Botões grandes e fáceis de tocar: adequados para o uso com os dedos
+- Uso de media queries: o CSS é escrito primeiro para telas pequenas e depois adiciona estilos para telas maiores
+- Textos legíveis: fontes maiores e bom espaçamento entre linhas
+
+
+

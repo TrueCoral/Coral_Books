@@ -34,14 +34,13 @@ body{
 
     display: flex;
     flex-direction: column;
-
     gap: 15px;
 }
 
 .botao{
 
     background-color: #F4F3EF;
-
+    font-family: "Quicksand", sans-serif;
     color: #1A1A1A;
 
     text-decoration: none;

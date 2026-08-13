@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Cadastro Leitor</title>
+<link rel="stylesheet" href="assets/css/cadastroleitor.css"> 
 </head>
 
 <body>
@@ -12,18 +13,18 @@
 
 <form>
 
-<label>Nome</label>
-<input type="text">
+
+<input type="text" placeholder="Nome">
 
 <br><br>
 
-<label>E-mail</label>
-<input type="email">
+
+<input type="email" placeholder="E-mail">
 
 <br><br>
 
-<label>Senha</label>
-<input type="password">
+
+<input type="password" placeholder="Senha">
 
 <br><br>
 

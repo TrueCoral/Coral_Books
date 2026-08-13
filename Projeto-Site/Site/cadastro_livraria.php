@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Cadastro Livraria</title>
+<link rel="stylesheet" href="assets/css/cadastrolivraria.css">
 </head>
 
 <body>
@@ -12,33 +13,27 @@
 
 <form>
 
-<label>Nome do responsável</label>
-<input type="text">
+<input type="text" placeholder="Nome do responsável">
 
 <br><br>
 
-<label>Nome do estabelecimento</label>
-<input type="text">
+<input type="text" placeholder="Nome do estabelecimento">
 
 <br><br>
 
-<label>Endereço</label>
-<input type="text">
+<input type="text" placeholder="Endereço">
 
 <br><br>
 
-<label>Telefone</label>
-<input type="text">
+<input type="text" placeholder="Telefone">
 
 <br><br>
 
-<label>E-mail</label>
-<input type="email">
+<input type="email" placeholder="E-mail">
 
 <br><br>
 
-<label>Senha</label>
-<input type="password">
+<input type="password" placeholder="Senha">
 
 <br><br>
 

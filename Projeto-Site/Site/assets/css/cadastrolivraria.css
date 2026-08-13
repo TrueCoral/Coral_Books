@@ -1,0 +1,55 @@
+body{
+    background-color:#FF4040;
+    min-height: 60vh;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+h1{
+    color: #F4F3EF;
+    font-size: 4rem;
+    margin-bottom: 30px;
+    font-family: "Rubik Spray Paint", system-ui;
+}
+input{
+    background-color: #F4F3EF;
+    border: none;
+    padding: 10px;
+    font-size: 2rem;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 8px; 
+    text-align: center;
+
+}
+input::placeholder {
+    color: #999;
+    font-style: italic;
+    font-size: 1.5rem;
+}
+button{
+    background-color: #F4F3EF;
+    font-family: "Quicksand", sans-serif;
+    color: #1A1A1A;
+    text-decoration: none;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.3s;
+    border: none;
+}
+
+button:hover {
+    background-color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}

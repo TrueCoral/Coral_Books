@@ -2,8 +2,13 @@
 <html lang="pt-br">
 
 <head>
+
 <meta charset="UTF-8">
+
 <title>Login</title>
+
+<link rel="stylesheet" href="site/assets/css/login.css">
+
 </head>
 
 <body>
@@ -12,13 +17,13 @@
 
 <form>
 
-<label>E-mail</label>
-<input type="email">
+
+<input type="email" placeholder="Digite seu e-mail">
 
 <br><br>
 
-<label>Senha</label>
-<input type="password">
+
+<input type="password" placeholder="Digite sua senha">
 
 <br><br>
 

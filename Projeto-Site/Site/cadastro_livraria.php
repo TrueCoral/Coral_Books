@@ -21,7 +21,15 @@
 
 <br><br>
 
-<input type="text" placeholder="Endereço">
+<input type="text" placeholder="Cidade">
+
+<br><br>
+
+<input type="text" placeholder="Bairro">
+
+<br><br>
+
+<input type="text" placeholder="Rua">
 
 <br><br>
 

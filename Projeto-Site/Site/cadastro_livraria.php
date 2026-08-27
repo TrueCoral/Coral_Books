@@ -21,15 +21,15 @@
 
 <br><br>
 
+<input type="text" placeholder="Estado">
+
+<br><br>
+
 <input type="text" placeholder="Cidade">
 
 <br><br>
 
-<input type="text" placeholder="Bairro">
-
-<br><br>
-
-<input type="text" placeholder="Rua">
+<input type="text" placeholder="Endereço">
 
 <br><br>
 

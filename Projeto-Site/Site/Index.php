@@ -19,7 +19,7 @@
 
     <div class="botoes">
 
-        <a href="../login.php" class="botao">
+        <a href="login.php" class="botao">
             Entrar
         </a>
 

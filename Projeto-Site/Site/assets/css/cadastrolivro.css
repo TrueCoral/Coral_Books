@@ -1,0 +1,206 @@
+header{
+    width: 100%;
+    text-align: center;
+}
+
+header h2{
+    color: #F4F3EF;
+}
+
+header nav{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+header nav a{
+    color: #F4F3EF;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+header nav a:hover{
+    text-decoration: underline;
+}
+
+body{
+    background-color:#FF4040;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+h1{
+    color: #F4F3EF;
+    font-size: 4rem;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-family: "Rubik Spray Paint", system-ui;
+    text-align: center;
+}
+
+h2{
+    color: #F4F3EF;
+    font-family: "Rubik Spray Paint", system-ui;
+    font-size: 2rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+input, textarea, select{
+    background-color: #F4F3EF;
+    border: none;
+    padding: 10px;
+    font-size: 1.3rem;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea{
+    min-height: 100px;
+    resize: vertical;
+    text-align: left;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #999;
+    font-style: italic;
+    font-size: 1rem;
+}
+
+label{
+    color: #F4F3EF;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
+    align-self: center;
+}
+
+input[type="file"]{
+    background-color: transparent;
+    color: #F4F3EF;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+button{
+    background-color: #F4F3EF;
+    font-family: "Quicksand", sans-serif;
+    color: #1A1A1A;
+    text-decoration: none;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.3s;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+hr{
+    width: 100%;
+    max-width: 500px;
+    margin: 40px 0 10px 0;
+    border: none;
+    border-top: 2px solid #F4F3EF;
+}
+
+.mensagem{
+    font-family: "Montserrat", sans-serif;
+    padding: 10px 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.mensagem.erro{
+    background-color: #ffd6d6;
+    color: #a30000;
+}
+
+.mensagem.sucesso{
+    background-color: #d6ffd6;
+    color: #027a02;
+}
+
+.cards{
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.card{
+    background-color: #F4F3EF;
+    border-radius: 12px;
+    padding: 15px;
+    width: 260px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: "Montserrat", sans-serif;
+    color: #1A1A1A;
+}
+
+.card h3{
+    font-family: "Quicksand", sans-serif;
+    color: #FF4040;
+}
+
+.card img{
+    align-self: center;
+    border-radius: 6px;
+}
+
+.btn{
+    display: inline-block;
+    text-align: center;
+    margin-top: 5px;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #1A1A1A;
+    color: #F4F3EF;
+    transition: 0.3s;
+}
+
+.btn:hover{
+    background-color: #333;
+}

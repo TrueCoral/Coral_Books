@@ -71,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form method="POST" action="login.php">
 
-
+<div class="cards">
+    <div class="card">
 <input type="email" name="email" placeholder="Digite seu e-mail" required>
 
 <br><br>
@@ -84,6 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <button type="submit">
 Entrar
 </button>
+
+<br><br>
+
+<a href="index.php"><button type="button">Voltar</button></a>
+</div>
+</div>
 
 </form>
 

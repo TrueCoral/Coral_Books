@@ -104,7 +104,6 @@ Seja bem-vindo ao Coral Books, <?= htmlspecialchars($_SESSION['nome']) ?>!
 <?php endforeach; ?>
 </div>
 </main>
-<?php require_once 'includes/footer.php'; ?>
 
 </body>
 

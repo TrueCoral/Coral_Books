@@ -11,7 +11,6 @@ $idlivraria = $_SESSION['id'];
 $id = (int)($_GET['id'] ?? 0);
 
 if ($id > 0) {
-    // Garante que só apaga livro que pertence à livraria logada
     $stmt = $pdo->prepare("DELETE FROM livros WHERE id = :id AND idlivraria = :idlivraria");
     $stmt->execute(['id' => $id, 'idlivraria' => $idlivraria]);
 }

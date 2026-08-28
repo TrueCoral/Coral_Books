@@ -1,5 +1,5 @@
 body{
-    background-color:#FF4040;
+    background-color:#F4F3EF;
     min-height: 60vh;
 
     display: flex;
@@ -8,7 +8,7 @@ body{
     align-items: center;
 }
 h1{
-    color: #F4F3EF;
+    color: #1A1A1A;
     font-size: 4rem;
     margin-bottom: 30px;
     font-family: "Rubik Spray Paint", system-ui;
@@ -29,9 +29,9 @@ input::placeholder {
     font-size: 1.5rem;
 }
 button{
-    background-color: #F4F3EF;
+    background-color: #1A1A1A;
     font-family: "Quicksand", sans-serif;
-    color: #1A1A1A;
+    color: #F4F3EF;
     text-decoration: none;
     text-align: center;
     padding: 15px;
@@ -53,3 +53,29 @@ form {
     align-items: center;
 
 }
+
+.cards{
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.card{
+    background-color: #FF4040;
+    border-radius: 12px;
+    padding: 15px;
+    width: 450px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-family: "Montserrat", sans-serif;
+    color: #1A1A1A;
+}
+

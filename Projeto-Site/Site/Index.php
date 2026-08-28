@@ -14,8 +14,9 @@
 <body>
 
 <div class="container">
-
-    <img src="assets/img/Logo.png" class="logo">
+    <div class="cards">
+    <div class="card">
+    <img src="assets/img/Logocoral.png" class="logo">
 
     <div class="botoes">
 
@@ -32,7 +33,8 @@
         </a>
 
     </div>
-
+</div>
+</div>
 </div>
 
 </body>

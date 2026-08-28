@@ -100,6 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 Cadastrar
 </button>
 
+<br> <br>
+<a href="index.php"><button type="button">Voltar</button></a>
+
 </form>
 
 </body>

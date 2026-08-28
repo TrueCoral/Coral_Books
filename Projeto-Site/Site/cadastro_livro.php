@@ -2,7 +2,6 @@
 session_start();
 require_once 'config/conexao.php';
 
-// Só livrarias/bibliotecas logadas podem cadastrar livros
 if (($_SESSION['tipo'] ?? '') !== 'livraria') {
     header("Location: login.php");
     exit();
@@ -12,7 +11,6 @@ $idlivraria = $_SESSION['id'];
 $erro = '';
 $sucesso = '';
 
-// CREATE - cadastro de um novo livro
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo     = trim($_POST['titulo'] ?? '');
     $autor      = trim($_POST['autor'] ?? '');
@@ -36,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $capa = null;
 
-        // Upload da capa (opcional)
+
         if (!empty($_FILES['capa']['name'])) {
             $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
             $ext = strtolower(pathinfo($_FILES['capa']['name'], PATHINFO_EXTENSION));
@@ -84,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// READ - lista os livros já cadastrados por essa livraria/biblioteca
 $stmt = $pdo->prepare("SELECT * FROM livros WHERE idlivraria = :idlivraria ORDER BY criado_em DESC");
 $stmt->execute(['idlivraria' => $idlivraria]);
 $meusLivros = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -195,7 +192,6 @@ $meusLivros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php endforeach; ?>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
 
 </body>
 

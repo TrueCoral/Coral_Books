@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$dbname = 'coral_books'; // nome do banco de dados
+$dbname = 'coral_books'; 
 $usuario = 'root';
-$senha = ''; // no XAMPP, por padrão o root não tem senha
+$senha = ''; 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);

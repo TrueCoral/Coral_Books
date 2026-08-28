@@ -11,7 +11,6 @@ $idlivraria = $_SESSION['id'];
 $id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
 $erro = '';
 
-// Busca o livro, garantindo que ele pertence à livraria logada
 $stmt = $pdo->prepare("SELECT * FROM livros WHERE id = :id AND idlivraria = :idlivraria");
 $stmt->execute(['id' => $id, 'idlivraria' => $idlivraria]);
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,7 +20,6 @@ if (!$livro) {
     exit();
 }
 
-// UPDATE
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo     = trim($_POST['titulo'] ?? '');
     $autor      = trim($_POST['autor'] ?? '');
@@ -94,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Se deu erro, mantém os dados digitados na tela em vez dos antigos
     $livro = array_merge($livro, [
         'titulo' => $titulo, 'autor' => $autor, 'genero' => $genero, 'isbn' => $isbn,
         'descricao' => $descricao, 'preco' => $preco, 'estoque' => $estoque, 'status' => $status,
@@ -170,12 +167,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <input type="text" name="secao" placeholder="Seção" value="<?= htmlspecialchars($livro['secao'] ?? '') ?>">
 <br><br>
 
-<button type="submit">Salvar Alterações</button>
-<a href="cadastro_livro.php">Cancelar</a>
+<button type="submit">Salvar Alterações</button><br>
+<a href="cadastro_livro.php"><button type="button">Cancelar</button></a>
 
 </form>
 
-<?php require_once 'includes/footer.php'; ?>
 
 </body>
 

@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'E-mail inválido.';
     } else {
-        // Verifica se o e-mail já está cadastrado (leitor ou livraria)
         $stmt = $pdo->prepare("SELECT idleitor FROM leitor WHERE email = :email");
         $stmt->execute(['email' => $email]);
 
@@ -54,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form method="POST" action="cadastro_leitor.php">
 
+<div class="cards">
+    <div class="card">
+
 <input type="text" name="nome" placeholder="Nome" required value="<?= isset($nome) ? htmlspecialchars($nome) : '' ?>">
 
 <br><br>
@@ -69,6 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <button type="submit">
 Cadastrar
 </button>
+
+<br> <br>
+<a href="index.php"><button type="button">Voltar</button></a>
+
+  </div>
+</div>
 
 </form>
 

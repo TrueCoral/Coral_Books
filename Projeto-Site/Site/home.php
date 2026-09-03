@@ -29,7 +29,7 @@ $statusLabel = [
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
-<link rel="stylesheet" href="assets/css/cadastrolivro.css">
+<link rel="stylesheet" href="assets/css/home.css">
 </head>
 
 <body>
@@ -38,11 +38,12 @@ $statusLabel = [
     <button type="button">Sair</button>
 </a>
 
+
 <h1>
 Seja bem-vindo ao Coral Books, <?= htmlspecialchars($_SESSION['nome']) ?>!
 </h1>
 
-<?php require_once 'includes/header.php'; ?>
+
 <main>
 
 <h2>Livros em Estoque</h2>
@@ -100,9 +101,16 @@ Seja bem-vindo ao Coral Books, <?= htmlspecialchars($_SESSION['nome']) ?>!
             <a class="btn" href="editar_livro.php?id=<?= $livro['id'] ?>">Editar</a>
             <a class="btn" href="excluir_livro.php?id=<?= $livro['id'] ?>">Excluir</a>
         <?php endif; ?>
+        
+    
+</a>
     </div>
+    
 <?php endforeach; ?>
 </div>
+<a href="cadastro_livro.php">
+<button type="button">Cadastrar Livro</button>
+</a>
 </main>
 
 </body>

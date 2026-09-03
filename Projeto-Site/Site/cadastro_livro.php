@@ -110,7 +110,8 @@ $meusLivros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php endif; ?>
 
 <form method="POST" action="cadastro_livro.php" enctype="multipart/form-data">
-
+<div class="cards">
+    <div class="card"> 
 <input type="text" name="titulo" placeholder="Título" required>
 <br><br>
 
@@ -154,7 +155,8 @@ $meusLivros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <br><br>
 
 <button type="submit">Cadastrar Livro</button>
-
+</div>
+</div>
 </form>
 
 <hr>

@@ -4,7 +4,7 @@ header{
 }
 
 header h2{
-    color: #1a1A1A;
+    color: #F4F3EF;
 }
 
 header nav{
@@ -15,7 +15,7 @@ header nav{
 }
 
 header nav a{
-    color: #1a1A1A;
+    color: #F4F3EF;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     text-decoration: none;
@@ -63,7 +63,7 @@ form {
 }
 
 input, textarea, select{
-    background-color: #F4F3EF;
+    background-color: #1A1A1A;
     border: none;
     padding: 10px;
     font-size: 1.3rem;
@@ -87,7 +87,7 @@ input::placeholder, textarea::placeholder {
 }
 
 label{
-    color: #1a1a1a;
+    color: #1a1A1A;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     margin-bottom: 5px;
@@ -103,9 +103,9 @@ input[type="file"]{
 }
 
 button{
-    background-color: #F4F3EF;
+    background-color: #1A1A1A;
     font-family: "Quicksand", sans-serif;
-    color: #1a1A1A;
+    color: #F4F3EF;
     text-decoration: none;
     text-align: center;
     padding: 15px;
@@ -164,16 +164,19 @@ hr{
 }
 
 .card{
-    background-color: #1a1A1A;
+    background-color: #1A1A1A;
     border-radius: 12px;
     padding: 15px;
-    width: 450px;
+    width: 260px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     gap: 5px;
     font-family: "Montserrat", sans-serif;
     color: #F4F3EF;
+}
+.card h2 {
+  color: #F4F3EF; 
 }
 
 .card h3{

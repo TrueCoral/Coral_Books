@@ -29,9 +29,9 @@ input::placeholder {
     font-size: 1.5rem;
 }
 button{
-    background-color: #F4F3EF;
+    background-color: #1A1A1A;
     font-family: "Quicksand", sans-serif;
-    color: #1A1A1A;
+    color: #F4F3EF;
     text-decoration: none;
     text-align: center;
     padding: 15px;
@@ -43,9 +43,7 @@ button{
 }
 
 button:hover {
-    background-color: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 form {
     display: flex;

@@ -64,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form method="POST" action="cadastro_livraria.php">
 
+<div class="cards">
+    <div class="card">
+
 <input type="text" name="nome_res" placeholder="Nome do responsável" required value="<?= isset($nome_res) ? htmlspecialchars($nome_res) : '' ?>">
 
 <br><br>
@@ -102,6 +105,10 @@ Cadastrar
 
 <br> <br>
 <a href="index.php"><button type="button">Voltar</button></a>
+
+</div>
+
+</div>
 
 </form>
 

@@ -117,6 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if ($erro): ?>
     <p class="mensagem erro"><?= htmlspecialchars($erro) ?></p>
 <?php endif; ?>
+<div class="cards">
+    <div class="card">
+
 
 <form method="POST" action="editar_livro.php?id=<?= $livro['id'] ?>" enctype="multipart/form-data">
 
@@ -169,7 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <button type="submit">Salvar Alterações</button><br>
 <a href="cadastro_livro.php"><button type="button">Cancelar</button></a>
-
+    </div>
+</div>
 </form>
 
 

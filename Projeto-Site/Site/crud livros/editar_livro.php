@@ -2,18 +2,28 @@
 session_start();
 require_once 'config/conexao.php';
 
-if (($_SESSION['tipo'] ?? '') !== 'livraria') {
+if (($_SESSION['perfil'] ?? '') !== 'estabelecimento') {
     header("Location: login.php");
     exit();
 }
 
-$idlivraria = $_SESSION['id'];
+$idEstabelecimento = $_SESSION['id'];
 $id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
 $erro = '';
 
-// Busca o livro, garantindo que ele pertence à livraria logada
-$stmt = $pdo->prepare("SELECT * FROM livros WHERE id = :id AND idlivraria = :idlivraria");
-$stmt->execute(['id' => $id, 'idlivraria' => $idlivraria]);
+// Busca o livro, garantindo que pertence à livraria logada
+$stmt = $pdo->prepare("
+    SELECT *
+    FROM livros
+    WHERE id_livro = :id
+    AND id_livraria = :id_livraria
+");
+
+$stmt->execute([
+    'id' => $id,
+    'id_livraria' => $idEstabelecimento
+]);
+
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$livro) {
@@ -23,6 +33,7 @@ if (!$livro) {
 
 // UPDATE
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $titulo     = trim($_POST['titulo'] ?? '');
     $autor      = trim($_POST['autor'] ?? '');
     $genero     = trim($_POST['genero'] ?? '');
@@ -36,20 +47,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $secao      = trim($_POST['secao'] ?? '');
 
     $statusValidos = ['a_venda', 'emprestimo', 'indisponivel'];
+
     if (!in_array($status, $statusValidos)) {
         $status = 'a_venda';
     }
 
     if ($titulo === '' || $autor === '') {
+
         $erro = 'Preencha ao menos o título e o autor.';
+
     } else {
+
         $capa = $livro['capa'];
 
+        // Upload de uma nova capa
         if (!empty($_FILES['capa']['name'])) {
+
             $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
-            $ext = strtolower(pathinfo($_FILES['capa']['name'], PATHINFO_EXTENSION));
+            $ext = strtolower(
+                pathinfo($_FILES['capa']['name'], PATHINFO_EXTENSION)
+            );
 
             if (in_array($ext, $extensoesPermitidas)) {
+
                 $novoNome = uniqid('capa_') . '.' . $ext;
                 $destino = 'assets/img/capas/' . $novoNome;
 
@@ -59,34 +79,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (move_uploaded_file($_FILES['capa']['tmp_name'], $destino)) {
                     $capa = $destino;
+                } else {
+                    $erro = 'Não foi possível enviar a nova capa.';
                 }
+
             } else {
                 $erro = 'Formato de imagem inválido. Use JPG, PNG ou WEBP.';
             }
         }
 
         if ($erro === '') {
-            $stmt = $pdo->prepare("UPDATE livros SET
-                titulo = :titulo, autor = :autor, genero = :genero, isbn = :isbn, capa = :capa,
-                descricao = :descricao, preco = :preco, estoque = :estoque, status = :status,
-                corredor = :corredor, prateleira = :prateleira, secao = :secao
-                WHERE id = :id AND idlivraria = :idlivraria");
+
+            $stmt = $pdo->prepare("
+                UPDATE livros SET
+                    titulo = :titulo,
+                    autor = :autor,
+                    genero = :genero,
+                    isbn = :isbn,
+                    capa = :capa,
+                    descricao = :descricao,
+                    preco = :preco,
+                    estoque = :estoque,
+                    status = :status,
+                    corredor = :corredor,
+                    prateleira = :prateleira,
+                    secao = :secao
+                WHERE id_livro = :id_livro
+                AND id_livraria = :id_livraria
+            ");
 
             $stmt->execute([
-                'titulo'     => $titulo,
-                'autor'      => $autor,
-                'genero'     => $genero,
-                'isbn'       => $isbn,
-                'capa'       => $capa,
-                'descricao'  => $descricao,
-                'preco'      => $preco,
-                'estoque'    => $estoque,
-                'status'     => $status,
-                'corredor'   => $corredor,
-                'prateleira' => $prateleira,
-                'secao'      => $secao,
-                'id'         => $id,
-                'idlivraria' => $idlivraria
+                'titulo'       => $titulo,
+                'autor'        => $autor,
+                'genero'       => $genero,
+                'isbn'         => $isbn,
+                'capa'         => $capa,
+                'descricao'    => $descricao,
+                'preco'        => $preco,
+                'estoque'      => $estoque,
+                'status'       => $status,
+                'corredor'     => $corredor,
+                'prateleira'   => $prateleira,
+                'secao'        => $secao,
+                'id_livro'     => $id,
+                'id_livraria'  => $idEstabelecimento
             ]);
 
             header("Location: cadastro_livro.php");
@@ -94,14 +130,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Se deu erro, mantém os dados digitados na tela em vez dos antigos
+    // Se houver erro, mantém os dados digitados
     $livro = array_merge($livro, [
-        'titulo' => $titulo, 'autor' => $autor, 'genero' => $genero, 'isbn' => $isbn,
-        'descricao' => $descricao, 'preco' => $preco, 'estoque' => $estoque, 'status' => $status,
-        'corredor' => $corredor, 'prateleira' => $prateleira, 'secao' => $secao
+        'titulo'     => $titulo,
+        'autor'      => $autor,
+        'genero'     => $genero,
+        'isbn'       => $isbn,
+        'descricao'  => $descricao,
+        'preco'      => $preco,
+        'estoque'    => $estoque,
+        'status'     => $status,
+        'corredor'   => $corredor,
+        'prateleira' => $prateleira,
+        'secao'      => $secao
     ]);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -121,9 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p class="mensagem erro"><?= htmlspecialchars($erro) ?></p>
 <?php endif; ?>
 
-<form method="POST" action="editar_livro.php?id=<?= $livro['id'] ?>" enctype="multipart/form-data">
+<form method="POST" action="editar_livro.php?id=<?= $livro['id_livro'] ?>" enctype="multipart/form-data">
 
-<input type="hidden" name="id" value="<?= $livro['id'] ?>">
+<input type="hidden" name="id" value="<?= $livro['id_livro'] ?>">
 
 <input type="text" name="titulo" placeholder="Título" required value="<?= htmlspecialchars($livro['titulo']) ?>">
 <br><br>
@@ -138,8 +183,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br><br>
 
 <?php if ($livro['capa']): ?>
-    <img src="<?= htmlspecialchars($livro['capa']) ?>" alt="Capa atual" width="100"><br>
+    <img src="<?= htmlspecialchars($livro['capa']) ?>" alt="Capa atual" width="100">
+    <br>
 <?php endif; ?>
+
 <label>Trocar capa:</label>
 <input type="file" name="capa" accept="image/png, image/jpeg, image/webp">
 <br><br>
@@ -154,11 +201,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br><br>
 
 <label>Status:</label>
+
 <select name="status">
-    <option value="a_venda" <?= $livro['status'] === 'a_venda' ? 'selected' : '' ?>>À venda</option>
-    <option value="emprestimo" <?= $livro['status'] === 'emprestimo' ? 'selected' : '' ?>>Em empréstimo</option>
-    <option value="indisponivel" <?= $livro['status'] === 'indisponivel' ? 'selected' : '' ?>>Indisponível</option>
+
+    <option value="a_venda" <?= $livro['status'] === 'a_venda' ? 'selected' : '' ?>>
+        À venda
+    </option>
+
+    <option value="emprestimo" <?= $livro['status'] === 'emprestimo' ? 'selected' : '' ?>>
+        Em empréstimo
+    </option>
+
+    <option value="indisponivel" <?= $livro['status'] === 'indisponivel' ? 'selected' : '' ?>>
+        Indisponível
+    </option>
+
 </select>
+
 <br><br>
 
 <input type="text" name="corredor" placeholder="Corredor" value="<?= htmlspecialchars($livro['corredor'] ?? '') ?>">
@@ -171,6 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br><br>
 
 <button type="submit">Salvar Alterações</button>
+
 <a href="cadastro_livro.php">Cancelar</a>
 
 </form>

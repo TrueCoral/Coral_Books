@@ -2,7 +2,6 @@
 session_start();
 require_once 'config/conexao.php';
 
-
 if (($_SESSION['perfil'] ?? '') !== 'estabelecimento') {
     header("Location: login.php");
     exit();
@@ -11,7 +10,6 @@ if (($_SESSION['perfil'] ?? '') !== 'estabelecimento') {
 $idEstabelecimento = $_SESSION['id'];
 $erro = '';
 $sucesso = '';
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo     = trim($_POST['titulo'] ?? '');
@@ -27,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $secao      = trim($_POST['secao'] ?? '');
 
     $statusValidos = ['a_venda', 'emprestimo', 'indisponivel'];
+
     if (!in_array($status, $statusValidos)) {
         $status = 'a_venda';
     }
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $capa = null;
 
-        // Upload da capa (opcional)
+        // Upload da capa
         if (!empty($_FILES['capa']['name'])) {
             $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
             $ext = strtolower(pathinfo($_FILES['capa']['name'], PATHINFO_EXTENSION));
@@ -51,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (move_uploaded_file($_FILES['capa']['tmp_name'], $destino)) {
                     $capa = $destino;
+                } else {
+                    $erro = 'Não foi possível enviar a capa.';
                 }
             } else {
                 $erro = 'Formato de imagem inválido. Use JPG, PNG ou WEBP.';
@@ -58,13 +59,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($erro === '') {
-            $stmt = $pdo->prepare("INSERT INTO livros
-                (idlivraria, titulo, autor, genero, isbn, capa, descricao, preco, estoque, status, corredor, prateleira, secao)
+            $data = date('Y-m-d H:i:s');
+
+            $stmt = $pdo->prepare("
+                INSERT INTO livros
+                (
+                    id_livraria,
+                    titulo,
+                    autor,
+                    genero,
+                    isbn,
+                    capa,
+                    descricao,
+                    preco,
+                    estoque,
+                    status,
+                    corredor,
+                    prateleira,
+                    secao,
+                    criado_em
+                )
                 VALUES
-                (:idlivraria, :titulo, :autor, :genero, :isbn, :capa, :descricao, :preco, :estoque, :status, :corredor, :prateleira, :secao)");
+                (
+                    :id_livraria,
+                    :titulo,
+                    :autor,
+                    :genero,
+                    :isbn,
+                    :capa,
+                    :descricao,
+                    :preco,
+                    :estoque,
+                    :status,
+                    :corredor,
+                    :prateleira,
+                    :secao,
+                    :criado_em
+                )
+            ");
 
             $stmt->execute([
-                'idlivraria' => $idlivraria,
+                'id_livraria' => $idEstabelecimento,
                 'titulo'     => $titulo,
                 'autor'      => $autor,
                 'genero'     => $genero,
@@ -76,7 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'status'     => $status,
                 'corredor'   => $corredor,
                 'prateleira' => $prateleira,
-                'secao'      => $secao
+                'secao'      => $secao,
+                'criado_em'  => $data
             ]);
 
             $sucesso = 'Livro cadastrado com sucesso!';
@@ -84,11 +120,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+$stmt = $pdo->prepare("
+    SELECT *
+    FROM livros
+    WHERE id_livraria = :id_livraria
+    ORDER BY criado_em DESC
+");
 
-$stmt = $pdo->prepare("SELECT * FROM livros WHERE idlivraria = :idlivraria ORDER BY criado_em DESC");
-$stmt->execute(['idlivraria' => $idlivraria]);
+$stmt->execute([
+    'id_livraria' => $idEstabelecimento
+]);
+
 $meusLivros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -165,38 +210,84 @@ $meusLivros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <h2>Meu Acervo</h2>
 
 <div class="cards">
+
 <?php if (empty($meusLivros)): ?>
+
     <p>Você ainda não cadastrou nenhum livro.</p>
+
 <?php endif; ?>
 
 <?php foreach ($meusLivros as $livro): ?>
+
     <div class="card">
+
         <?php if ($livro['capa']): ?>
-            <img src="<?= htmlspecialchars($livro['capa']) ?>" alt="Capa de <?= htmlspecialchars($livro['titulo']) ?>" width="100">
+            <img
+                src="<?= htmlspecialchars($livro['capa']) ?>"
+                alt="Capa de <?= htmlspecialchars($livro['titulo']) ?>"
+                width="100"
+            >
         <?php endif; ?>
+
         <h3><?= htmlspecialchars($livro['titulo']) ?></h3>
-        <p><strong>Autor:</strong> <?= htmlspecialchars($livro['autor']) ?></p>
-        <p><strong>Gênero:</strong> <?= htmlspecialchars($livro['genero'] ?? '-') ?></p>
-        <p><strong>Estoque:</strong> <?= (int)$livro['estoque'] ?></p>
-        <p><strong>Status:</strong>
+
+        <p>
+            <strong>Autor:</strong>
+            <?= htmlspecialchars($livro['autor']) ?>
+        </p>
+
+        <p>
+            <strong>Gênero:</strong>
+            <?= htmlspecialchars($livro['genero'] ?? '-') ?>
+        </p>
+
+        <p>
+            <strong>Estoque:</strong>
+            <?= (int)$livro['estoque'] ?>
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+
             <?php
             $statusLabel = [
                 'a_venda' => 'À venda',
                 'emprestimo' => 'Em empréstimo',
                 'indisponivel' => 'Indisponível'
             ];
-            echo htmlspecialchars($statusLabel[$livro['status']] ?? $livro['status']);
+
+            echo htmlspecialchars(
+                $statusLabel[$livro['status']] ?? $livro['status']
+            );
             ?>
         </p>
-        <p><strong>Localização:</strong> Corredor <?= htmlspecialchars($livro['corredor'] ?? '-') ?>, Prateleira <?= htmlspecialchars($livro['prateleira'] ?? '-') ?>, Seção <?= htmlspecialchars($livro['secao'] ?? '-') ?></p>
-        <a class="btn" href="editar_livro.php?id=<?= $livro['id'] ?>">Editar</a>
-        <a class="btn" href="excluir_livro.php?id=<?= $livro['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir este livro?');">Excluir</a>
+
+        <p>
+            <strong>Localização:</strong>
+            Corredor <?= htmlspecialchars($livro['corredor'] ?? '-') ?>,
+            Prateleira <?= htmlspecialchars($livro['prateleira'] ?? '-') ?>,
+            Seção <?= htmlspecialchars($livro['secao'] ?? '-') ?>
+        </p>
+
+        <a class="btn" href="editar_livro.php?id=<?= $livro['id_livro'] ?>">
+            Editar
+        </a>
+
+        <a
+            class="btn"
+            href="excluir_livro.php?id=<?= $livro['id_livro'] ?>"
+            onclick="return confirm('Tem certeza que deseja excluir este livro?');"
+        >
+            Excluir
+        </a>
+
     </div>
+
 <?php endforeach; ?>
+
 </div>
 
 <?php require_once 'includes/footer.php'; ?>
 
 </body>
-
 </html>

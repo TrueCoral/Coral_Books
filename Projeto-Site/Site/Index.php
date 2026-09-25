@@ -19,15 +19,15 @@
 
     <div class="botoes">
 
-        <a href="login.php" class="botao">
+        <a href="auth/login.php" class="botao">
             Entrar
         </a>
 
-        <a href="cadastro_leitor.php" class="botao">
+        <a href="auth/cadastro_leitor.php" class="botao">
             Cadastro de Leitor
         </a>
 
-        <a href="cadastro_livraria.php" class="botao">
+        <a href="auth/cadastro_livraria.php" class="botao">
             Cadastro de Livraria
         </a>
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($usuario && password_verify($senha, $usuario['senha'])) {
             $_SESSION['perfil'] = 'leitor';
-            $_SESSION['id']     = $usuario['idleitor'];
+            $_SESSION['id']     = $usuario['id_leitor'];
             $_SESSION['nome']   = $usuario['nome'];
             $_SESSION['email']  = $usuario['email'];
 
@@ -31,11 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario && password_verify($senha, $usuario['senha'])) {
-            $_SESSION['perfil']            = 'estabelecimento';
-            $_SESSION['tipo_estabelecimento'] = $usuario['tipo']; 
-            $_SESSION['id']                = $usuario['id_estabelecimento'];
-            $_SESSION['nome']              = $usuario['nome_estabelecimento'];
-            $_SESSION['email']             = $usuario['email'];
+            $_SESSION['perfil'] = 'estabelecimento';
+            $_SESSION['id']     = $usuario['id_livraria'];
+            $_SESSION['nome']   = $usuario['nome_est'];
+            $_SESSION['email']  = $usuario['email'];
 
             header("Location: home.php");
             exit();

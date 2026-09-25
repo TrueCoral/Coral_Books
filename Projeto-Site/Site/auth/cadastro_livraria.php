@@ -4,26 +4,21 @@ require_once 'config/conexao.php';
 $erro = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome_responsavel    = trim($_POST['nome_responsavel'] ?? '');
+    $nome_responsavel     = trim($_POST['nome_responsavel'] ?? '');
     $nome_estabelecimento = trim($_POST['nome_estabelecimento'] ?? '');
-    $tipo     = $_POST['tipo'] ?? '';
-    $estado   = trim($_POST['estado'] ?? '');
-    $cidade   = trim($_POST['cidade'] ?? '');
-    $endereco = trim($_POST['endereco'] ?? '');
-    $telefone = trim($_POST['telefone'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $senha    = $_POST['senha'] ?? '';
-
-    $tiposValidos = ['biblioteca', 'livraria'];
+    $estado                = trim($_POST['estado'] ?? '');
+    $cidade                = trim($_POST['cidade'] ?? '');
+    $endereco              = trim($_POST['endereco'] ?? '');
+    $telefone              = trim($_POST['telefone'] ?? '');
+    $email                 = trim($_POST['email'] ?? '');
+    $senha                 = $_POST['senha'] ?? '';
 
     if ($nome_responsavel === '' || $nome_estabelecimento === '' || $endereco === '' || $email === '' || $senha === '') {
         $erro = 'Preencha todos os campos obrigatórios.';
-    } elseif (!in_array($tipo, $tiposValidos)) {
-        $erro = 'Selecione se o estabelecimento é uma biblioteca ou uma livraria.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'E-mail inválido.';
     } else {
-        $stmt = $pdo->prepare("SELECT id_estabelecimento FROM estabelecimento WHERE email = :email");
+        $stmt = $pdo->prepare("SELECT id_livraria FROM estabelecimento WHERE email = :email");
         $stmt->execute(['email' => $email]);
 
         if ($stmt->fetch()) {
@@ -33,27 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
                 $stmt = $pdo->prepare("INSERT INTO estabelecimento
-                    (nome_responsavel, nome_estabelecimento, tipo, endereco, cidade, estado, telefone, email, senha)
+                    (nome_res, nome_est, endereco, cidade, estado, telefone, email, senha)
                     VALUES
-                    (:nome_responsavel, :nome_estabelecimento, :tipo, :endereco, :cidade, :estado, :telefone, :email, :senha)");
+                    (:nome_res, :nome_est, :endereco, :cidade, :estado, :telefone, :email, :senha)");
 
                 $stmt->execute([
-                    'nome_responsavel'     => $nome_responsavel,
-                    'nome_estabelecimento' => $nome_estabelecimento,
-                    'tipo'                 => $tipo,
-                    'endereco'             => $endereco,
-                    'cidade'               => $cidade,
-                    'estado'               => $estado,
-                    'telefone'             => $telefone,
-                    'email'                => $email,
-                    'senha'                => $senhaHash
+                    'nome_res' => $nome_responsavel,
+                    'nome_est' => $nome_estabelecimento,
+                    'endereco' => $endereco,
+                    'cidade'   => $cidade,
+                    'estado'   => $estado,
+                    'telefone' => $telefone,
+                    'email'    => $email,
+                    'senha'    => $senhaHash
                 ]);
 
                 header("Location: login.php?cadastro=sucesso");
                 exit();
             } catch (PDOException $e) {
-                
-                $erro = 'Este e-mail já está cadastrado.';
+                $erro = 'Não foi possível realizar o cadastro.';
             }
         }
     }
@@ -83,15 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br><br>
 
 <input type="text" name="nome_estabelecimento" placeholder="Nome do estabelecimento" required value="<?= isset($nome_estabelecimento) ? htmlspecialchars($nome_estabelecimento) : '' ?>">
-
-<br><br>
-
-<label>Tipo de estabelecimento:</label>
-<select name="tipo" required>
-    <option value="">Selecione...</option>
-    <option value="livraria" <?= (isset($tipo) && $tipo === 'livraria') ? 'selected' : '' ?>>Livraria</option>
-    <option value="biblioteca" <?= (isset($tipo) && $tipo === 'biblioteca') ? 'selected' : '' ?>>Biblioteca</option>
-</select>
 
 <br><br>
 
